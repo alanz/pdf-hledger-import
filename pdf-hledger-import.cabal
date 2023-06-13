@@ -1,0 +1,34 @@
+cabal-version:      3.4
+name:               pdf-hledger-import
+version:            0.1.0.0
+synopsis:           Extract hledger info from a bank statement PDF
+
+-- A longer description of the package.
+description: Currently tested with HSBC UK current and credit card statements.
+
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Alan Zimmerman
+maintainer:         alan.zimm@gmail.com
+
+build-type:         Simple
+tested-with:         GHC == 9.6.2
+
+extra-doc-files:    CHANGELOG.md
+common warnings
+    ghc-options: -Wall
+
+executable hsbc-pdf
+    import:           warnings
+    hs-source-dirs:   app
+    main-is:          Main.hs
+    other-modules:    Pdf
+    build-depends:    base >=4.16.4.0
+                    , parsec
+                    , bytestring >= 0.10.4 && < 0.12
+                    , pdf-toolbox-content
+                    , pdf-toolbox-document
+                    , scientific
+                    , time
+                    , utf8-string
+    default-language: GHC2021

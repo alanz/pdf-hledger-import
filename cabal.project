@@ -1,0 +1,12 @@
+packages: .
+
+source-repository-package
+    type: git
+    location: https://github.com/alanz/pdf-toolbox
+    tag: 17d2e3e1d2f697e0df21982f70b842811d02fee3
+    subdir: content
+source-repository-package
+    type: git
+    location: https://github.com/alanz/pdf-toolbox
+    tag: 17d2e3e1d2f697e0df21982f70b842811d02fee3
+    subdir: document
