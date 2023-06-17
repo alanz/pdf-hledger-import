@@ -285,8 +285,9 @@ getDay (Date d) =
 
 data TransactionType
     = DirectDebit
+    | DebitRequest
     | BankPayment
-    | OtherBankPayment
+    | OnlineBankPayment
     | StopOrder
     | Visa
     | Atm
@@ -432,13 +433,16 @@ pbDate = do
 
 pbTransactionType :: (HasCallStack) => PB.Parser Token
 pbTransactionType =
-    (string "DD" >>= \_ -> return $ TTransactionType DirectDebit)
-        <|> (string "BP" >>= \_ -> return $ TTransactionType BankPayment)
-        <|> (string "OBP" >>= \_ -> return $ TTransactionType OtherBankPayment)
-        <|> (string "SO" >>= \_ -> return $ TTransactionType StopOrder)
-        <|> (string "VIS" >>= \_ -> return $ TTransactionType Visa)
-        <|> (string "ATM" >>= \_ -> return $ TTransactionType Atm)
-        <|> (string "CR" >>= \_ -> return $ TTransactionType Credit)
+    choice
+        [ try (string "DD" >>= \_ -> return $ TTransactionType DirectDebit)
+        , (string "DR" >>= \_ -> return $ TTransactionType DebitRequest)
+        , (string "BP" >>= \_ -> return $ TTransactionType BankPayment)
+        , (string "OBP" >>= \_ -> return $ TTransactionType OnlineBankPayment)
+        , (string "SO" >>= \_ -> return $ TTransactionType StopOrder)
+        , (string "VIS" >>= \_ -> return $ TTransactionType Visa)
+        , (string "ATM" >>= \_ -> return $ TTransactionType Atm)
+        , (string "CR" >>= \_ -> return $ TTransactionType Credit)
+        ]
 
 pbDetail :: (HasCallStack) => PB.Parser Token
 pbDetail = do

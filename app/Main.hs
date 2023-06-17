@@ -79,8 +79,9 @@ detailAsStr tt (Detail ds) = show (transactionTypeAsStr tt ++ ":" ++ intercalate
 
 transactionTypeAsStr :: TransactionType -> String
 transactionTypeAsStr DirectDebit = "DD"
+transactionTypeAsStr DebitRequest = "DR"
 transactionTypeAsStr BankPayment = "BP"
-transactionTypeAsStr OtherBankPayment = "OBP"
+transactionTypeAsStr OnlineBankPayment = "OBP"
 transactionTypeAsStr StopOrder = "SO"
 transactionTypeAsStr Visa = "VIS"
 transactionTypeAsStr Atm = "ATM"
