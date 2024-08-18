@@ -287,6 +287,7 @@ data TransactionType
     = DirectDebit
     | DebitRequest
     | BankPayment
+    | BankContactless
     | OnlineBankPayment
     | StopOrder
     | Visa
@@ -437,6 +438,7 @@ pbTransactionType =
         [ try (string "DD" >>= \_ -> return $ TTransactionType DirectDebit)
         , (string "DR" >>= \_ -> return $ TTransactionType DebitRequest)
         , (string "BP" >>= \_ -> return $ TTransactionType BankPayment)
+        , (string ")))" >>= \_ -> return $ TTransactionType BankContactless)
         , (string "OBP" >>= \_ -> return $ TTransactionType OnlineBankPayment)
         , (string "SO" >>= \_ -> return $ TTransactionType StopOrder)
         , (string "VIS" >>= \_ -> return $ TTransactionType Visa)

@@ -81,6 +81,7 @@ transactionTypeAsStr :: TransactionType -> String
 transactionTypeAsStr DirectDebit = "DD"
 transactionTypeAsStr DebitRequest = "DR"
 transactionTypeAsStr BankPayment = "BP"
+transactionTypeAsStr BankContactless = ")))"
 transactionTypeAsStr OnlineBankPayment = "OBP"
 transactionTypeAsStr StopOrder = "SO"
 transactionTypeAsStr Visa = "VIS"
