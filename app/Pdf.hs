@@ -148,6 +148,18 @@ getTransactionsCredit acc ((_, [(_, _d1), (_, _y1), (_, d2), (_, y2), (_, detail
             : acc
         )
         xs
+getTransactionsCredit acc ((_, [(_, _d1), (_, _y1), (_, d2), (_, y2), (_, detail1), (_, detail2),  (_, amount), (_, "C"), (_, "R")]) : xs) =
+    getTransactionsCredit
+        ( Transaction
+            { tType = CreditCardCredit
+            , tDate = Just $ ccDate d2 y2
+            , tDetail = Detail [toString detail1, toString detail2]
+            , tAmount = Amount (toString amount)
+            , tBalance = Nothing
+            }
+            : acc
+        )
+        xs
 getTransactionsCredit acc ((_, [(_, _d1), (_, _y1), (_, d2), (_, y2), (_, detail), (_, amount)]) : xs) =
     getTransactionsCredit
         ( Transaction
@@ -262,6 +274,9 @@ getBodyCredit bs = filter isBodyCredit bs
 
 isBodyCredit :: (Scientific, [(Scientific, ByteString)]) -> Bool
 isBodyCredit (_, [(_, d1), (_, _y1), (_, _d2), (_, _y2), (_, _detail), (_, _amount), (_, "C"), (_, "R")])
+    | isJust (getDay (toDate d1)) = True
+    | otherwise = False
+isBodyCredit (_, [(_, d1), (_, _y1), (_, _d2), (_, _y2), (_, _detail1), (_, _detail2), (_, _amount), (_, "C"), (_, "R")])
     | isJust (getDay (toDate d1)) = True
     | otherwise = False
 isBodyCredit (_, [(_, d1), (_, _y1), (_, _d2), (_, _year2), (_, _detail1), (_, _detail2), (_, _amount)])
